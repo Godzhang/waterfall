@@ -46,9 +46,10 @@
 		},
 		addBox: function(response){
 			var data = JSON.parse(response).data;
-			this.renderData(data);			
+			this.renderData(data);	
 		},
 		renderData: function(data){
+			var self = this;
 			var frag = document.createDocumentFragment();
 
 			data.forEach(function(val, index){
