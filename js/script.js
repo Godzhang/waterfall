@@ -46,8 +46,7 @@
 		},
 		addBox: function(response){
 			var data = JSON.parse(response).data;
-			this.renderData(data);
-			this.waterfall();
+			this.renderData(data);			
 		},
 		renderData: function(data){
 			var frag = document.createDocumentFragment();
@@ -61,10 +60,12 @@
 				box.appendChild(imgbox);
 				var img = new Image();
 				img.src = "images/" + val.src;
-				imgbox.appendChild(img);
+				img.onload = function(){
+					imgbox.appendChild(img);
+				}
 			});
-			
 			this.wrap.appendChild(frag);
+			this.waterfall();
 		},
 		waterfall: function(){
 			this.child = this.getChild(this.wrap, this.childClass);
