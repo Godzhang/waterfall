@@ -38,7 +38,7 @@
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState === 4){
 					if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
-						self.addBox(xhr.responseText);
+						self.renderData(xhr.responseText);
 					}
 				}
 			}
@@ -46,12 +46,9 @@
 			xhr.open("get", url, true);
 			xhr.send();
 		},
-		addBox: function(response){
-			var data = JSON.parse(response).data;
-			this.renderData(data);
-		},
-		renderData: function(data){
+		renderData: function(response){
 			var self = this;
+			var data = JSON.parse(response).data;
 			var frag = document.createDocumentFragment();
 
 			data.forEach(function(val, index){
