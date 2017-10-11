@@ -9,6 +9,7 @@
 		this.hArr = [];								//存放每列的高度
 		this.url = this.opt.url;					//数据请求url
 		this.loadCount = this.opt.loadCount || 30;  //每次加载数量
+		this.flag = true;
 		this.init();
 	}
 	Waterfall.prototype = {
@@ -20,7 +21,8 @@
 			this.waterfall();
 			//绑定滚动事件
 			window.addEventListener("scroll", function(){
-				if(self.scrollToBottom()){
+				if(self.scrollToBottom() && self.flag){
+					self.flag = false;
 					self.loadData(self.url);
 				}
 			}, false);
@@ -46,7 +48,7 @@
 		},
 		addBox: function(response){
 			var data = JSON.parse(response).data;
-			this.renderData(data);	
+			this.renderData(data);
 		},
 		renderData: function(data){
 			var self = this;
@@ -63,10 +65,13 @@
 				img.src = "images/" + val.src;
 				img.onload = function(){
 					imgbox.appendChild(img);
+					if(index === data.length - 1){
+						self.wrap.appendChild(frag);
+						self.waterfall();
+						self.flag = true;
+					}
 				}
 			});
-			this.wrap.appendChild(frag);
-			this.waterfall();
 		},
 		waterfall: function(){
 			this.child = this.getChild(this.wrap, this.childClass);
