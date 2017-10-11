@@ -6,10 +6,14 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<style>
 		img{display: block;}
-		.wrap{position: relative;}
+		.wrap{position: relative;
+			/*overflow: hidden;*/
+		}
 		.box{float: left;padding: 15px 0 0 15px;}
 		.imgbox{padding: 5px;border: 1px solid #eee;border-radius: 5px;width: 200px;box-shadow: 0 0 5px #333;}
 		.box img{width: 100%;}
+		.loading{height: 32px;padding: 15px 0;display: none;}
+		.loading img{margin: 0 auto;}
 	</style>
 </head>
 <body>
@@ -166,7 +170,9 @@
 		<div class="imgbox"><img src="images/50.jpg" alt="" /></div>
 	</div>
 </div>
-
+<div class="loading" id="loading">
+	<img src="images/loading.gif" alt="" />
+</div>
 
 
 <script src="js/script.js"></script>
@@ -175,6 +181,7 @@ window.onload = function(){
 	var waterfall = new Waterfall({
 		wrap: document.getElementById("wrap"),
 		childClass: 'box',
+		loading: document.getElementById("loading"),
 		url: "js/data.json"
 	})
 }

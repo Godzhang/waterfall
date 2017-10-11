@@ -4,6 +4,7 @@
 		this.wrap = this.opt.wrap;
 		this.childClass = this.opt.childClass || "box";
 		this.child = this.getChild(this.wrap, this.childClass);
+		this.loading = this.opt.loading;
 		this.childWidth = this.child[0].offsetWidth;
 		this.cols = Math.floor(document.documentElement.clientWidth / this.childWidth);
 		this.hArr = [];								//存放每列的高度
@@ -23,12 +24,13 @@
 			window.addEventListener("scroll", function(){
 				if(self.scrollToBottom() && self.flag){
 					self.flag = false;
+					self.loading.style.display = "block";
 					self.loadData(self.url);
 				}
 			}, false);
 		},
 		initialWrap: function(){
-			this.wrap.style.width = this.childWidth * this.cols + "px";
+			this.wrap.style.width = this.childWidth * this.cols + 5 + "px";
 			this.wrap.style.margin = "0 auto";
 		},
 		loadData: function(url){
@@ -65,6 +67,7 @@
 					if(index === data.length - 1){
 						self.wrap.appendChild(frag);
 						self.waterfall();
+						self.loading.style.display = "none";
 						self.flag = true;
 					}
 				}
@@ -85,6 +88,8 @@
 					this.hArr[minIndex] += this.child[i].offsetHeight;
 				}
 			}
+			var maxHeight = Math.max.apply(null, this.hArr);
+			this.wrap.style.height = maxHeight + "px";
 		},
 		getChild: function(wrap, className){
 			var all = wrap.getElementsByTagName('*');
